@@ -1,0 +1,22 @@
+{
+    "north": [
+        "Cathedral Park",
+        "Pier Park"
+    ],
+    "northeast": [
+        "Overlook Park",
+        "Irving Park"
+    ],
+    "southeast": [
+        "Mt. Tabor Park",
+        "Powell Butte Park"
+    ],
+    "southwest": [
+        "Washington Park",
+        "Gabriel Park"
+    ],
+    "northwest": [
+        "Forest Park",
+        "Wallace Park"
+    ]
+}

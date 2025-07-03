@@ -47,17 +47,15 @@ async def test_choose_park_location_not_listed_parks_tool(create_client):
     client = create_client
     
     suitable_error = """
-                the provided location you have requested is not one of the options: \n
-                    
-                provide either of the following: \n
+                invalid location request provide one of the following: \n
                 
                 * 'north' \n
                 * 'northeast' \n
                 * 'southeast' \n
                 * 'southwest' \n
                 * 'northwest' \n
-                
                 """
+                
     async with client:
         
         # call the choose_pdx_parks 

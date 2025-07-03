@@ -1,0 +1,8 @@
+name: PDX Parks Server
+version: 0.0.1
+mcpServers:
+  - name: PDX Parks Tool
+    command: python3
+    type: stdio
+    args:
+      - "/Users/gregwitt/Github/mcp-slm-ollama/.continue/mcpServers/server.py"

@@ -18,13 +18,6 @@ mcp = FastMCP(name="Local MCP Server", host=HOST, port=PORT)
 
 # Tools:
 @mcp.tool
-def server_status() -> str:
-    '''
-        tool to check and ensure the server is up and running...
-    '''
-    return f"🛸 mcp server running on: {HOST}:{PORT}"
-
-@mcp.tool
 def choose_pdx_park(location: str) -> str:
     '''
         choose a park based on the incoming location provided by the user. 
@@ -74,5 +67,6 @@ def choose_pdx_park(location: str) -> str:
     
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    # mcp.run(transport="stdio")
+    mcp.run(transport="streamable-http")
     

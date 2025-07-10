@@ -67,6 +67,8 @@ def choose_pdx_park(location: str) -> str:
     
 
 if __name__ == "__main__":
+    # enable stdio client support:
     # mcp.run(transport="stdio")
+    # enable streamable-http support:
     mcp.run(transport="streamable-http")
     

@@ -159,13 +159,31 @@ invalid location request provide one of the following: \n
 
 #### Running the Server
 
-there are two ways you can run the mcp server
+let's develop the code that will call the `run()` method on our MCP server.
+it's a simple one liner. 
+
+```
+if __name__ == "__main__":
+    mcp.run(transport=<chosen_transport>)
+```
+
+for simplicity we will focus at first on `STDIO` the actual method will take the `transport="stdio"` to establish this protocol. making the method look this.
+
+```python
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
+```
+
+there are two ways you can call the python file and actually run the mcp server.
 
 **MCP Inspector Mode**
 
 `fastmcp dev server.py`
 
-running the server in inspector mode will allow you to interact with the tools you have developed under the resources/tools section. This option is for playing around the inspector and making some queries yourself.
+*this method will likely install an `npx` package for you the first time in the terminal. That's normal.*
+
+running the server in inspector mode will allow you to interact with the tools you have developed under the resources/tools section. This option is for playing around the inspector and making some queries yourself. 
+
 
 **Python Run Server**
 
@@ -218,26 +236,57 @@ this ensures the models you have pulled are available for your continue plugin.
 So far we have created an the `MCPServer` pulled the latest version of `Llama3.2` with `Ollama` and have the model running with `ollama run`. We need to connect our plugin to the MCPServer so that we can casually code along and make calls to our tools. Next I will cover two types of transport protocols that can connect our running MCP server to Continue.
 
 #### Stdio MCP Server
+ 
+ `STDIO` or standard in and standard out. Is reserved for Clients that are using input and output via text from one process to another process, this makes sense for clients that act take input from the terminal or a script to execute calls to an MCP server.
 
+ [STDIO](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports)
 
+**Local MCP Server Yaml**
+
+this configuration is required for STDIO, the fields that are needed are the `type: stdio` this dictates the transport. we will also need the command to execute the file. `uv` is the only command I was able to use. `uv` is another *(much better)* package manager for python. and the `args` which is a little more complex depending on your project. For example here. we supply a `--directory` which will move the operation to the absolute path of the project. then `run` to run the python file `./server.py` which is the server in question.
+
+```yaml
+name: PDX Parks Server
+version: 0.0.1
+mcpServers:
+  - name: PDX Parks Tool
+    type: stdio
+    command: uv
+    args:
+      - --directory
+      - /Users/goodguygregory/Github/mcp-slm-ollama/
+      - run
+      - ./server.py
+```
 
 #### Streaming HTTP Transport 
 
-In order to configure streaming support for HTTP clients to connect to your hosted `mcpserver`. Continue will need to have access to the protocol transport type of your server. 
+In order to configure streaming support for HTTP clients to connect to your hosted `mcpserver`. Continue will need to have access to the protocol transport type of your server. we will need to configure
+
+**Streamable HTTP Transport**
+
+```yaml
+name: PDX Parks Server
+version: 0.0.1
+mcpServers:
+# STREAMABLE-HTTP
+  - name: PDX Parks Tool
+    type: streamable-http
+    url: "http://127.0.0.1:5173/mcp"
+```
 
 
 
 
 #### Documentation
 
-[FastMCP Repo](https://github.com/cklapperich/fastmcp-39)
-[Official Documentation for Getting Started with FastMCP](https://gofastmcp.com/getting-started/welcome)
-[UV Basics](https://www.datacamp.com/tutorial/python-uv)
-[Client Development](https://modelcontextprotocol.io/quickstart/client)
-[Ollama MCP Stdio Client](https://medium.com/@jonigl/build-an-mcp-client-in-minutes-local-ai-agents-just-got-real-a10e186a560f)
-[Anthropic MCP SSE Client](https://www.f22labs.com/blogs/mcp-practical-guide-with-sse-transport/)
-[Adaptive Engineer MCP Server](https://newsletter.adaptiveengineer.com/p/build-a-custom-mcp-client-and-server)
-
+[FastMCP Repo](https://github.com/cklapperich/fastmcp-39)  
+[Official Documentation for Getting Started with FastMCP](https://gofastmcp.com/getting-started/welcome)  
+[UV Basics](https://www.datacamp.com/tutorial/python-uv)  
+[Client Development](https://modelcontextprotocol.io/quickstart/client)  
+[Ollama MCP Stdio Client](https://medium.com/@jonigl/build-an-mcp-client-in-minutes-local-ai-agents-just-got-real-a10e186a560f)   
+[Anthropic MCP SSE Client](https://www.f22labs.com/blogs/mcp-practical-guide-with-sse-transport/)   
+[Adaptive Engineer MCP Server](https://newsletter.adaptiveengineer.com/p/build-a-custom-mcp-client-and-server)  
 
 **Videos**
 

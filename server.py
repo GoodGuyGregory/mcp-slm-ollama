@@ -2,7 +2,6 @@
 # this file is for hosting the FastMCP server
 # contains tools we define.
 from fastmcp import FastMCP
-from typing import List
 import os
 from dotenv import load_dotenv
 
